@@ -3,4 +3,8 @@ project(KNN)
 
 set(CMAKE_CXX_STANDARD 23)
 
-add_executable(KNN src/main.cpp)
+add_executable(KNN src/main.cpp
+        headers/dataPoint.h
+        src/dataPoint.cpp
+        src/knn.cpp
+        headers/knn.h)
