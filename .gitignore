@@ -1,0 +1,50 @@
+# CLion / JetBrains IDE
+.idea/
+cmake-build-*/
+cmake-build-debug/
+cmake-build-release/
+
+# User-specific IDE files
+*.iml
+
+# CMake generated files
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Build output directories
+build/
+bin/
+out/
+Debug/
+Release/
+
+# Compiled C++ files
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+
+# Debugging files
+*.pdb
+*.ilk
+*.idb
+*.dSYM/
+
+# Compiler temporary files
+*.gch
+*.pch
+*.tmp
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+desktop.ini
