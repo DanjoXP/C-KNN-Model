@@ -10,7 +10,8 @@
 
 class DataPoint {
 public:
-    DataPoint(std::string label,double x, double y);
+    DataPoint(std::vector<DataPoint> features);
+    DataPoint(std::string label,std::vector<DataPoint> features);
     std::string displayData();
     double euclindeanDistance(DataPoint other);
     double getX();
@@ -20,6 +21,7 @@ public:
     void addNeighbour(DataPoint dp);
     void addNeighbours(std::vector<DataPoint> dataPoints);
     std::vector<DataPoint> getNeighbours();
+    std::vector<double> getFeatures();
 
 
 private:
@@ -27,6 +29,7 @@ private:
     double y;
     std::string label;
     std::vector<DataPoint> neighbours;
+    std::vector<double> features;
 };
 
 #endif //KNN_DATAPOINT_H

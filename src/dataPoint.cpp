@@ -5,12 +5,19 @@
 #include <math.h>
 
 
-DataPoint::DataPoint(std::string label,double x,double y)
+DataPoint::DataPoint(std::string label,std::vector<DataPoint> features)
 {
     this->label=label;
     this->x=x;
     this->y=y;
 }
+DataPoint::DataPoint(std::vector<DataPoint> features)
+{
+    this->label= "unknown";
+    this->x=x;
+    this->y=y;
+}
+
 
 std::string DataPoint::getLabel() { return this->label; }
 double DataPoint::getX() { return this->x; }
@@ -18,9 +25,12 @@ double DataPoint::getY() { return this->y; }
 
 // calculates Euclidean distance between two points
 double DataPoint::euclindeanDistance(DataPoint other) {
-    double xRes = std::pow(this->x - other.getX(),2);
-    double yRes = std::pow(this->y - other.getY(),2);
-    return std::sqrt(xRes + yRes);
+   double sum = 0.0;
+    std::vector<double> otherFeatures = other.getFeatures();
+    for (size_t i = 0; i < this->features.size(); i++) {
+        sum += std::pow(this->features[i] - otherFeatures[i], 2);
+    }
+    return std::sqrt(sum);
 }
 
 std::string DataPoint::displayData() {
@@ -40,3 +50,7 @@ std::vector<DataPoint> DataPoint::getNeighbours() {
 }
 
 void DataPoint::setLabel(std::string label) {this->label=label;}
+
+double DataPoint::getFeatures() {
+
+}

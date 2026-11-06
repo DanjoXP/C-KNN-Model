@@ -3,29 +3,39 @@
 #include <vector>
 #include "../headers/knn.h"
 
-std::vector<DataPoint> randomiseDataPoints(int numberOfPoints) {
-    std::vector<DataPoint> randomDataPoints;
+std::vector<DataPoint> generateClusteredData(int numberOfPoints) {
+    std::vector<DataPoint> dataPoints;
     srand(time(0));
 
-    std::string labels[] = {"red","blue"};
-
-    for (int i = 0; i < numberOfPoints; i++) {
-        std::string label = labels[rand() % 2];
-        double x = rand() % 101;
-        double y = rand() % 101;
-        DataPoint dataPoint(label, x, y);
-
-        randomDataPoints.push_back(dataPoint);
+    for (int i = 0; i< numberOfPoints; i++) {
+        if (i % 2 == 0 ) {
+            double x = rand() % 41;
+            double y = rand() % 41;
+            dataPoints.push_back(DataPoint("red", x, y));
+        } else {
+            double x = 60 + (rand() % 41);
+            double y = 60 + (rand() % 41);
+            dataPoints.push_back(DataPoint("blue", x, y));
+        }
     }
 
-    return randomDataPoints;
+    return dataPoints;
 }
 
-
 int main() {
-    std::vector<DataPoint> dataPoints = randomiseDataPoints(100);
+    std::vector<DataPoint> trainingPoints = generateClusteredData(100);
+    KNN k(5);
+    k.train(trainingPoints);
 
-    KNN k;
-    k.train(dataPoints);
+    DataPoint test1(20,25);
+    DataPoint test2(80,75);
+    DataPoint test3(50,50);
+
+    k.predict(test1);
+    std::cout << "Test 1 -> " << test1.displayData() << std::endl;
+    k.predict(test2);
+    std::cout << "Test 2 -> " << test2.displayData() << std::endl;
+    k.predict(test3);
+    std::cout << "Test 3 -> " << test2.displayData() << std::endl;
     
 }

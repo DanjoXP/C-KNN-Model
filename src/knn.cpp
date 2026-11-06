@@ -14,11 +14,14 @@ void KNN::setNeighbours(int neighbours) {
 }
 
 void KNN::train(std::vector<DataPoint>& dataPoints) {
-    propagateNeighbours(dataPoints);
+    this->trainingData = dataPoints;
+}
 
-    for (DataPoint& dp : dataPoints) {
-        classifyDataPoint(&dp);
-    }
+std::string KNN::predict(DataPoint &queryPoint) {
+    std::vector<DataPoint> nearest = getKNeighbours(queryPoint,this->trainingData);
+    queryPoint.addNeighbours(nearest);
+    classifyDataPoint(&queryPoint);
+    return queryPoint.getLabel();
 }
 
 std::vector<DataPoint> KNN::getKNeighbours(DataPoint current,std::vector<DataPoint> dataPoints) {
@@ -43,12 +46,7 @@ void KNN::propagateNeighbours(std::vector<DataPoint>& dataPoints) {
             nearestNeighbours.push_back(dataPoints.at(j));
         }
         nearestNeighbours = getKNeighbours(*currentPtr,nearestNeighbours);
-        classifyDataPoint (&*currentPtr);
         currentPtr->addNeighbours(nearestNeighbours);
-    }
-
-    for (int i = 0; i < 10; i++) {
-        std::cout << dataPoints[i].displayData() << std::endl;
     }
 }
 
@@ -60,7 +58,7 @@ void KNN::classifyDataPoint(DataPoint *dp) {
         counts[d.getLabel()]++;
     }
 
-    std::string mostCommonLabel;
+    std::string mostCommonLabel = dp->getLabel();
     int highestCount = 0;
 
     for (const auto& [label, count] : counts) {
